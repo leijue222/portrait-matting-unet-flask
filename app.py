@@ -75,8 +75,12 @@ def clean():
     if flask.request.method == "POST":
         cmd_in = "find ./static/input/ -type f -mmin +" + minutes + " -exec rm {} \;"
         cmd_out = "find ./static/output/ -type f -mmin +" + minutes + " -exec rm {} \;"
+		cmd_bg = "find ./static/bg/ -type f -mmin +" + minutes + " -exec rm {} \;"
+		cmd_merge = "find ./static/merge/ -type f -mmin +" + minutes + " -exec rm {} \;"
         os.system(cmd_in)
         os.system(cmd_out)
+		os.system(cmd_bg)
+		os.system(cmd_merge)
         data["success"] = True
     return flask.jsonify(data)
 
