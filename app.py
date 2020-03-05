@@ -28,7 +28,7 @@ def segmentation(image_path):
     return mask_path
 
 
-@app.route("/api/seg/", methods=["POST"])
+@app.route("/api/seg", methods=["POST"])
 def seg():
     data = {"success": False}
     if flask.request.method == "POST":
@@ -47,7 +47,7 @@ def seg():
     return flask.jsonify(data)
 
 
-@app.route("/api/matting/", methods=["POST"])
+@app.route("/api/matting", methods=["POST"])
 def matting():
     data = {"success": False}
     bg_image = flask.request.files['bg']
@@ -68,19 +68,19 @@ def matting():
     return flask.jsonify(data)
 
 
-@app.route("/api/clean/", methods=["POST"])
+@app.route("/api/clean", methods=["POST"])
 def clean():
     data = {"success": False}
     minutes = flask.request.form.get("minutes", type=str, default=30)
     if flask.request.method == "POST":
         cmd_in = "find ./static/input/ -type f -mmin +" + minutes + " -exec rm {} \;"
         cmd_out = "find ./static/output/ -type f -mmin +" + minutes + " -exec rm {} \;"
-		cmd_bg = "find ./static/bg/ -type f -mmin +" + minutes + " -exec rm {} \;"
-		cmd_merge = "find ./static/merge/ -type f -mmin +" + minutes + " -exec rm {} \;"
+        cmd_bg = "find ./static/bg/ -type f -mmin +" + minutes + " -exec rm {} \;"
+        cmd_merge = "find ./static/merge/ -type f -mmin +" + minutes + " -exec rm {} \;"
         os.system(cmd_in)
         os.system(cmd_out)
-		os.system(cmd_bg)
-		os.system(cmd_merge)
+        os.system(cmd_bg)
+        os.system(cmd_merge)
         data["success"] = True
     return flask.jsonify(data)
 
