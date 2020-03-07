@@ -5,7 +5,7 @@ import flask
 from PIL import Image
 
 from web.flask_config import input_path, output_path, bg_path
-from web.flask_utils import change_channels_to_rgb, merge_image_name
+from web.flask_utils import change_channels_to_rgb, merge_image_name, tid_maker
 from web.matting import process
 
 app = flask.Flask(__name__)
@@ -28,6 +28,37 @@ def segmentation(image_path):
     return mask_path
 
 
+@app.route("/api/wechat/upload", methods=["POST"])
+def upload():
+    data = {"success": False}
+    file = flask.request.files['file']
+    file_type = flask.request.form.get("type", type=str)
+    file_name = file_type + tid_maker() + '.png'
+    file_path = './static/' + file_type + '/' + file_name
+    file.save(file_path)
+    file_photo = file_type + "/" + file_name + '.png'
+    data["filePath"] = flask.url_for('static', _external=True, filename=file_photo)
+    data["fileName"] = file_name
+    data["success"] = True
+    return flask.jsonify(data)
+
+
+@app.route("/api/wechat/matting", methods=["POST"])
+def wechat_matting():
+    data = {"success": False}
+    im_name = flask.request.form.get("im", type=str)
+    bg_name = flask.request.form.get("bg", type=str)
+    im_path = input_path + im_name
+    segmentation(im_path)
+    process(im_name, bg_name)
+
+    merge_name = merge_image_name(im_name, bg_name) + '-merge.png'
+    merge_photo = "merge/" + merge_name
+    data["result"] = flask.url_for('static', _external=True, filename=merge_photo)
+    data["success"] = True
+    return flask.jsonify(data)
+
+
 @app.route("/api/seg", methods=["POST"])
 def seg():
     data = {"success": False}
@@ -47,9 +78,11 @@ def seg():
     return flask.jsonify(data)
 
 
+
 @app.route("/api/matting", methods=["POST"])
 def matting():
     data = {"success": False}
+    print("files:", flask.request.files)
     bg_image = flask.request.files['bg']
     im_image = flask.request.files['im']
     bg_name = bg_image.filename
@@ -89,4 +122,4 @@ if __name__ == '__main__':
     # im_name = '2.jpg'
     # bg_name = 'bg3.jpg'
     # img, alpha, fg, bg = process(im_name, bg_name)
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='127.0.0.1', port=5000)
