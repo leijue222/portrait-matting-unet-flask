@@ -1,7 +1,11 @@
 # Portrait Mating  implementation in UNet with PyTorch.
 
-![input and output for a random image in the test dataset](https://user-images.githubusercontent.com/30276789/76141416-03521900-609f-11ea-95e7-80d7ecf83760.png)
-
+**Segmentation**
+![Segmentation](https://user-images.githubusercontent.com/30276789/76141416-03521900-609f-11ea-95e7-80d7ecf83760.png)
+**Matting**
+![Matting](https://user-images.githubusercontent.com/30276789/76142315-81b2b900-60a7-11ea-934d-35a00e50eda2.png)
+For the convenience of demonstration, I built the API service through Flask, and finally deployed it on WeChat Mini Program.
+The code part of the WeChat applet is in here [portrait-matting-wechat](https://github.com/leijue222/portrait-matting-wechat).
 
 ## Dependencies
 
@@ -19,7 +23,7 @@
 
 ## Data
 This model was trained from scratch with 18000 images (data augmentation by 2000images)
-Training dataset was from  [Deep Automatic Portrait Matting](http://www.cse.cuhk.edu.hk/leojia/projects/automatting/index.html).
+Training dataset was from [Deep Automatic Portrait Matting](http://www.cse.cuhk.edu.hk/leojia/projects/automatting/index.html).
 Your can download in baidu cloud [http://pan.baidu.com/s/1dE14537](http://pan.baidu.com/s/1dE14537). Password: ndg8 
 **For academic communication only, if there is a quote, please inform the original author!**
 
