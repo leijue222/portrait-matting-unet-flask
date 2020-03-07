@@ -1,8 +1,8 @@
 # Portrait Mating  implementation in UNet with PyTorch.
 
-**Segmentation**
+**Segmentation Demo Result:**
 ![Segmentation](https://user-images.githubusercontent.com/30276789/76141416-03521900-609f-11ea-95e7-80d7ecf83760.png)
-**Matting**
+**Matting Demo Result:**
 ![Matting](https://user-images.githubusercontent.com/30276789/76142315-81b2b900-60a7-11ea-934d-35a00e50eda2.png)
 For the convenience of demonstration, I built the API service through Flask, and finally deployed it on WeChat Mini Program.
 The code part of the WeChat applet is in here [portrait-matting-wechat](https://github.com/leijue222/portrait-matting-wechat).
