@@ -1,5 +1,5 @@
 Flask==1.1.1
-future==0.18.2
+future==0.18.3
 MarkupSafe==1.1.1
 matplotlib==3.1.3
 
